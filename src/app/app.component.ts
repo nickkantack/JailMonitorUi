@@ -50,6 +50,15 @@ export class AppComponent {
   }
 
   makeRemoteMatchLocalNames() {
+
+    // First, do some validation
+    this.names = this.names.filter((x: string[]) => {
+      return x[0] || x[1];  
+    });
+
+    // TODO REMOVE THIS once using the backend fully
+    return;
+
     this.csvRepository.publishNameListToRemote(this.emailAddress, this.names, (x: string) => {
       console.log(`Finished pushing names to remote`);
     });

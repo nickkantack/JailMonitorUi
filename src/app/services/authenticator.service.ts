@@ -52,7 +52,6 @@ export class Authenticator {
         const generalObject = JSON.parse(this.preEncryptedData);
         const arrayObject = {"iv": new Uint8Array(Object.values(generalObject.iv)), "ciphertext": new Uint8Array(Object.values(generalObject.ciphertext))};
         const encrypted = arrayObject;
-        console.log(key);
         const decrypted = await this.decrypt(encrypted, key);
         return decrypted;
     }
@@ -63,14 +62,19 @@ export class Authenticator {
 
     initialize() {
         (async () => {
-            if (window.localStorage.getItem(`JailMonitor_creds`)) {
-                this.creds = window.localStorage.getItem(`JailMonitor_creds`) as string;
-            } else {
-                const password = prompt("Enter your password");
-                this.creds = await this.deriveCredentials(password as string);
-                window.localStorage.setItem(`JailMonitor_creds`, this.creds);
+            try {
+                if (window.localStorage.getItem(`JailMonitor_creds`)) {
+                    this.creds = window.localStorage.getItem(`JailMonitor_creds`) as string;
+                } else {
+                    const password = prompt("Enter your password");
+                    this.creds = await this.deriveCredentials(password as string);
+                    window.localStorage.setItem(`JailMonitor_creds`, this.creds);
+                }
+            } catch {
+                alert(`Authentication failed.`);
+                window.localStorage.removeItem(`JailMonitor_creds`);
+                window.location.reload();
             }
-            console.log(`creds are set to ${this.creds}`);
         })();
     }
 

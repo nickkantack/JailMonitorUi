@@ -1,32 +1,43 @@
 <main class="main">
   <div class="content">
     This is test content
-  </div>
-  <button (click)="makeLocalNamesMatchRemote()">Load</button>
-  <button (click)="addName()">+</button>
-  <button (click)="makeRemoteMatchLocalNames()">Save</button>
-  <div>
-    <table>
-      <thead>
-        <tr>
-          <th>First name</th>
-          <th>Last name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let row of names; let i = index">
-          <td>
-            <input placeholder="first name" [(ngModel)]="names[i][0]" />
-          </td>
-          <td>
-            <input placeholder="last name" [(ngModel)]="names[i][1]" />
-          </td>
-          <td>
-            <button (click)="deleteRow(i)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <button (click)="makeLocalNamesMatchRemote()">Load</button>
+    <button (click)="makeRemoteMatchLocalNames()">Save</button>
+    <div id="tableDiv">
+      <table id="table">
+        <thead>
+          <tr>
+            <th>First name</th>
+            <th>Last name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of names; let i = index">
+            <td>
+              <input placeholder="first name" [(ngModel)]="names[i][0]" />
+            </td>
+            <td>
+              <input placeholder="last name" [(ngModel)]="names[i][1]" />
+            </td>
+            <td>
+              <button class="deleteRow" (click)="deleteRow(i)">Delete</button>
+            </td>
+          </tr>
+          <tr *ngIf="names.length === 0">
+            <td colspan="3">
+              <div class="noNamesDiv">
+                There are no names currently saved.
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <button id="addNameButton" (click)="addName()">Add name</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </main>
 

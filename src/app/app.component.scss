@@ -1,0 +1,34 @@
+
+body {
+    box-sizing: border-box;
+}
+
+input {
+    width: 95%;
+}
+
+table {
+    width: 95%;
+}
+
+.content {
+    position: relative;
+    max-width: 30em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.deleteRow {
+    width: 100%;
+}
+
+.noNamesDiv {
+    padding: 1em;
+    font-style: italic;
+    color: #333;
+    text-align: center;
+}
+
+#addNameButton {
+    width: 100%;
+}
