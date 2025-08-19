@@ -34,6 +34,14 @@ export class AppComponent {
     this.makeLocalNamesMatchRemote();
   }
 
+  addName() {
+    this.names.push(["", ""]);
+  }
+
+  deleteRow(index: number): void {
+    this.names.splice(index, 1);
+  }
+
   makeLocalNamesMatchRemote() {
     this.csvRepository.getNameListFromRemote(this.emailAddress, (x: string[][]) => {
       this.names = x;

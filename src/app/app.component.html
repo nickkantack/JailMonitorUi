@@ -2,7 +2,9 @@
   <div class="content">
     This is test content
   </div>
-  <button (click)="test()">Test</button>
+  <button (click)="makeLocalNamesMatchRemote()">Load</button>
+  <button (click)="addName()">+</button>
+  <button (click)="makeRemoteMatchLocalNames()">Save</button>
   <div>
     <table>
       <thead>
@@ -14,10 +16,13 @@
       <tbody>
         <tr *ngFor="let row of names; let i = index">
           <td>
-            <input [(ngModel)]="names[i][0]" />
+            <input placeholder="first name" [(ngModel)]="names[i][0]" />
           </td>
           <td>
-            <input [(ngModel)]="names[i][1]" />
+            <input placeholder="last name" [(ngModel)]="names[i][1]" />
+          </td>
+          <td>
+            <button (click)="deleteRow(i)">Delete</button>
           </td>
         </tr>
       </tbody>
