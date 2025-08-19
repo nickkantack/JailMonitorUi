@@ -1,8 +1,9 @@
 <main class="main">
   <div class="content">
-    This is test content
-    <button (click)="makeLocalNamesMatchRemote()">Load</button>
-    <button (click)="makeRemoteMatchLocalNames()">Save</button>
+    <div class="controlPanel">
+      <button (click)="makeLocalNamesMatchRemote()">Load</button>
+      <button (click)="makeRemoteMatchLocalNames()">Save</button>
+    </div>
     <div id="tableDiv">
       <table id="table">
         <thead>
@@ -14,10 +15,10 @@
         <tbody>
           <tr *ngFor="let row of names; let i = index">
             <td>
-              <input placeholder="first name" [(ngModel)]="names[i][0]" />
+              <input placeholder="first name" [(ngModel)]="names[i][0]" (input)="noteUnsavedChanges()" />
             </td>
             <td>
-              <input placeholder="last name" [(ngModel)]="names[i][1]" />
+              <input placeholder="last name" [(ngModel)]="names[i][1]" (input)="noteUnsavedChanges()"/>
             </td>
             <td>
               <button class="deleteRow" (click)="deleteRow(i)">Delete</button>

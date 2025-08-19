@@ -20,6 +20,7 @@ export class AppComponent {
 
   names: string[][] = [];
   private emailAddress: string;
+  private areThereUnsavedChanges: boolean = false;
 
   constructor(
     private csvRepository: CsvRepository,
@@ -40,13 +41,28 @@ export class AppComponent {
 
   deleteRow(index: number): void {
     this.names.splice(index, 1);
+    this.noteUnsavedChanges();
+  }
+
+  noteUnsavedChanges() {
+    console.log(`There are unsaved changes`);
+    this.areThereUnsavedChanges = true;
   }
 
   makeLocalNamesMatchRemote() {
+
+    if (this.areThereUnsavedChanges) {
+      if (!confirm(`You have unsaved changes on this page. Loading will replace everything on this page with the latest saved list of names. Are you sure you want to load the name list from the server and lose local changes?`)) {
+        alert(`Your local changes have been preserved.`);
+        return;
+      }
+    }
+
     this.csvRepository.getNameListFromRemote(this.emailAddress, (x: string[][]) => {
       this.names = x;
       console.log(`Got names from remote`);
     });
+    this.areThereUnsavedChanges = false;
   }
 
   makeRemoteMatchLocalNames() {
@@ -56,12 +72,11 @@ export class AppComponent {
       return x[0] || x[1];  
     });
 
-    // TODO REMOVE THIS once using the backend fully
-    return;
-
     this.csvRepository.publishNameListToRemote(this.emailAddress, this.names, (x: string) => {
       console.log(`Finished pushing names to remote`);
     });
+
+    this.areThereUnsavedChanges = false;
   }
 
 }

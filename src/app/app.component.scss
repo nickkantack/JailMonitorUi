@@ -1,8 +1,4 @@
 
-body {
-    box-sizing: border-box;
-}
-
 input {
     width: 95%;
 }
@@ -16,6 +12,15 @@ table {
     max-width: 30em;
     margin-left: auto;
     margin-right: auto;
+}
+
+.controlPanel {
+    width: 100%;
+    padding: 0.5em;
+}
+.controlPanel button {
+    padding: 0.5em;
+    margin: 0.5em;
 }
 
 .deleteRow {
