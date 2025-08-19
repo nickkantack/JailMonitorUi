@@ -1,35 +1,49 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { CsvRepository } from './services/csv-repository.service';
 import { Authenticator } from './services/authenticator.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterOutlet
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'JailMonitorUi';
 
-  private names: string[][] = [];
+  names: string[][] = [];
+  private emailAddress: string;
 
   constructor(
     private csvRepository: CsvRepository,
     private authenticator: Authenticator
   ) {
     csvRepository.initializeWithCredentials(authenticator.getCreds());
+    // TODO use path or something else to set email address
+    this.emailAddress = "test2";
   }
 
   test() {
-    console.log(`Testing my csv repository`);
-    this.csvRepository.publishNameListToRemote("test3", [
-      ["a", "b"],
-      ["c", "d"]
-    ], () => {
-      this.csvRepository.getNameListFromRemote("test3", (x: string[][]) => {
-        console.log(x);
-      });
+    this.makeLocalNamesMatchRemote();
+  }
+
+  makeLocalNamesMatchRemote() {
+    this.csvRepository.getNameListFromRemote(this.emailAddress, (x: string[][]) => {
+      this.names = x;
+      console.log(`Got names from remote`);
+    });
+  }
+
+  makeRemoteMatchLocalNames() {
+    this.csvRepository.publishNameListToRemote(this.emailAddress, this.names, (x: string) => {
+      console.log(`Finished pushing names to remote`);
     });
   }
 

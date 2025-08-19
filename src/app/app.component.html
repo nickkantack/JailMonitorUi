@@ -3,6 +3,26 @@
     This is test content
   </div>
   <button (click)="test()">Test</button>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>First name</th>
+          <th>Last name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of names; let i = index">
+          <td>
+            <input [(ngModel)]="names[i][0]" />
+          </td>
+          <td>
+            <input [(ngModel)]="names[i][1]" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </main>
 
 <router-outlet />
