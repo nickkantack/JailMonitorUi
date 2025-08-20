@@ -16,7 +16,10 @@ export class CsvRepository {
     this.lambdaService.initializeWithCredentials(credentials);
   }
 
-  async getNameListFromRemote(emailAddress: string, callback: Function) {
+  async getNameListFromRemote(emailAddress: string, 
+    successCallback: Function,
+    errorCallback: Function,
+  ) {
 
     const response = await this.lambdaService.invokeLambda(
       "GetCsvLambdaStack-GetCsvFunction4610AF86-hxeMUHNRkV8r",
@@ -24,10 +27,14 @@ export class CsvRepository {
         email_address: emailAddress
       }
     );
-    const undelimitedText = JSON.parse(response.body).csv_text;
-    const lineDelimited = undelimitedText.trim().split("\n");
-    const commaDelimited = lineDelimited.map((x: string) => x.replace(/\r/g, "").split(","));
-    callback(commaDelimited);
+    try {
+      const undelimitedText = JSON.parse(response.body).csv_text;
+      const lineDelimited = undelimitedText.trim().split("\n");
+      const commaDelimited = lineDelimited.map((x: string) => x.replace(/\r/g, "").split(","));
+      successCallback(commaDelimited);
+    } catch {
+      errorCallback(response.body);
+    }
   }
 
   async publishNameListToRemote(emailAddress: string, nameList: string[][], callback: Function) {

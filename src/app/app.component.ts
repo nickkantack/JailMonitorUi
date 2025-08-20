@@ -32,7 +32,8 @@ export class AppComponent {
   ) {
     csvRepository.initializeWithCredentials(authenticator.getCreds());
     // TODO use path or something else to set email address
-    this.emailAddress = "test2";
+    this.emailAddress = "nickkantack@gmail.com";
+    this.makeLocalNamesMatchRemote();
   }
 
   test() {
@@ -87,11 +88,18 @@ export class AppComponent {
 
     this.updateMessage(`Loading names...`, StatusColor.NEUTRAL);
 
-    this.csvRepository.getNameListFromRemote(this.emailAddress, (x: string[][]) => {
-      this.names = x;
-      this.updateMessage(`Successfully loaded names from server.`, StatusColor.SUCCESS);
-    });
-    this.areThereUnsavedChanges = false;
+    this.csvRepository.getNameListFromRemote(this.emailAddress, 
+      (x: string[][]) => {
+        this.names = x;
+        this.updateMessage(`Successfully loaded names from server.`, StatusColor.SUCCESS);
+        this.hasEverLoaded = true;
+      },
+      (x: string) => {
+        this.updateMessage(`Error fetching names. Consider refreshing page.`, StatusColor.FAILURE);
+        console.error(`Error from server: ${x}`);
+      },
+
+    );
   }
 
   makeRemoteMatchLocalNames() {
