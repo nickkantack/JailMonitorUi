@@ -1,7 +1,7 @@
 
 ### Steps for 20 Aug 2025
 * ~~Change Angular code to hardcode nickkantack@gmail.com instead of "test" for emailAddress.~~
-* Run app and add some names from your morning jailmonitor report
+* ~~Run app and add some names from your morning jailmonitor report~~
 * Rename your .xlsx file in S3
 * Manually run the scraper lambda for nickkantack@gmail.com
 * Confirm receipt of email and accuracy

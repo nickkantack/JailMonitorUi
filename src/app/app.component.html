@@ -1,9 +1,7 @@
 <main class="main">
   <div class="content">
     <div class="controlPanel">
-      <button (click)="makeLocalNamesMatchRemote()">Load</button>
       <button (click)="makeRemoteMatchLocalNames()">Save</button>
-      <button (click)="test()">Test</button>
     </div>
     <div [class.flash]="flash" [style.background-color]="statusColor" class="statusDiv">
       {{ message }}
@@ -25,7 +23,10 @@
               <input placeholder="last name" [(ngModel)]="names[i][1]" (input)="noteUnsavedChanges()"/>
             </td>
             <td>
-              <button class="deleteRow" (click)="deleteRow(i)">Delete</button>
+              <svg class="buttonSvg" (click)="deleteRow(i)" viewBox="0 0 100 100">
+                <path stroke-width="4px" stroke="#333" d="M0 100L100 0"/>
+                <path stroke-width="4px" stroke="#333" d="M0 0L100 100"/>
+              </svg>
             </td>
           </tr>
           <tr *ngIf="names.length === 0">

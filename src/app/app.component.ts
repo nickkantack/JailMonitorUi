@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CsvRepository } from './services/csv-repository.service';
@@ -22,6 +22,7 @@ export class AppComponent {
   names: string[][] = [];
   private emailAddress: string;
   private areThereUnsavedChanges: boolean = false;
+  private hasLoadedNamesFromServer: boolean = false;
   message = "";
   flash = false;
   statusColor: StatusColor = StatusColor.NEUTRAL;
@@ -60,6 +61,14 @@ export class AppComponent {
     }, 500);
   }
 
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any): void {
+    if (this.areThereUnsavedChanges) {
+      $event.preventDefault();
+      $event.returnValue = '';
+    }
+  }
+
   addName() {
     this.names.push(["", ""]);
   }
@@ -92,7 +101,7 @@ export class AppComponent {
       (x: string[][]) => {
         this.names = x;
         this.updateMessage(`Successfully loaded names from server.`, StatusColor.SUCCESS);
-        this.hasEverLoaded = true;
+        this.hasLoadedNamesFromServer = true;
       },
       (x: string) => {
         this.updateMessage(`Error fetching names. Consider refreshing page.`, StatusColor.FAILURE);
@@ -108,6 +117,13 @@ export class AppComponent {
     this.names = this.names.filter((x: string[]) => {
       return x[0] || x[1];  
     });
+
+    if (!this.hasLoadedNamesFromServer) {
+      if (!confirm(`Are you sure you want to save your local list? Any previous list from the server has not been loaded yet, so proceeding might overwrite what is present on the server. Do you still want to save your current list?`)) {
+        return;
+      }
+    }
+    this.hasLoadedNamesFromServer = true;
 
     this.updateMessage(`Saving to server...`, StatusColor.WARN);
     this.csvRepository.publishNameListToRemote(this.emailAddress, this.names, (x: string) => {
