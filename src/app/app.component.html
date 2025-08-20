@@ -3,8 +3,12 @@
     <div class="controlPanel">
       <button (click)="makeLocalNamesMatchRemote()">Load</button>
       <button (click)="makeRemoteMatchLocalNames()">Save</button>
+      <button (click)="test()">Test</button>
     </div>
-    <div id="tableDiv">
+    <div [class.flash]="flash" [style.background-color]="statusColor" class="statusDiv">
+      {{ message }}
+    </div>
+    <div class="tableDiv">
       <table id="table">
         <thead>
           <tr>

@@ -1,10 +1,12 @@
 
 input {
     width: 95%;
+    padding: 0.3em;
+    font-size: 0.8em;
 }
 
 table {
-    width: 95%;
+    width: 100%;
 }
 
 .content {
@@ -32,6 +34,23 @@ table {
     font-style: italic;
     color: #333;
     text-align: center;
+}
+
+.statusDiv {
+    padding: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.flash {
+    color: #fff;
+    background-color: #fff !important;
+}
+
+.tableDiv {
+    padding-top: 1em;
 }
 
 #addNameButton {

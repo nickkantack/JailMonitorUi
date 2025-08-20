@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CsvRepository } from './services/csv-repository.service';
 import { Authenticator } from './services/authenticator.service';
 import { FormsModule } from '@angular/forms';
+import { StatusColor } from './constants/constants';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,9 @@ export class AppComponent {
   names: string[][] = [];
   private emailAddress: string;
   private areThereUnsavedChanges: boolean = false;
+  message = "";
+  flash = false;
+  statusColor: StatusColor = StatusColor.NEUTRAL;
 
   constructor(
     private csvRepository: CsvRepository,
@@ -32,7 +36,27 @@ export class AppComponent {
   }
 
   test() {
-    this.makeLocalNamesMatchRemote();
+    this.updateMessage(Math.random().toString(), StatusColor.NEUTRAL);
+    // this.makeLocalNamesMatchRemote();
+  }
+
+  updateMessage(newMessage: string, color: StatusColor) {
+    this.flash = false;
+
+    // Re-trigger the animation
+    setTimeout(() => {
+      this.flash = true;
+    });
+    setTimeout(() => {
+      this.flash = false;
+    }, 500);
+
+    // Change the text at the point in the animation where it is
+    // invisible
+    setTimeout(() => {
+      this.message = newMessage;
+      if (color) this.statusColor = color;
+    }, 500);
   }
 
   addName() {
@@ -45,6 +69,9 @@ export class AppComponent {
   }
 
   noteUnsavedChanges() {
+    if (!this.areThereUnsavedChanges) {
+      this.updateMessage(`Changes are not yet saved.`, StatusColor.WARN);
+    }
     console.log(`There are unsaved changes`);
     this.areThereUnsavedChanges = true;
   }
@@ -58,9 +85,11 @@ export class AppComponent {
       }
     }
 
+    this.updateMessage(`Loading names...`, StatusColor.NEUTRAL);
+
     this.csvRepository.getNameListFromRemote(this.emailAddress, (x: string[][]) => {
       this.names = x;
-      console.log(`Got names from remote`);
+      this.updateMessage(`Successfully loaded names from server.`, StatusColor.SUCCESS);
     });
     this.areThereUnsavedChanges = false;
   }
@@ -72,8 +101,10 @@ export class AppComponent {
       return x[0] || x[1];  
     });
 
+    this.updateMessage(`Saving to server...`, StatusColor.WARN);
     this.csvRepository.publishNameListToRemote(this.emailAddress, this.names, (x: string) => {
       console.log(`Finished pushing names to remote`);
+      this.updateMessage(`Changes saved to server.`, StatusColor.SUCCESS);
     });
 
     this.areThereUnsavedChanges = false;
