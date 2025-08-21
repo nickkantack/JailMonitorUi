@@ -32,8 +32,7 @@ export class AppComponent {
     private authenticator: Authenticator
   ) {
     csvRepository.initializeWithCredentials(authenticator.getCreds());
-    // TODO use path or something else to set email address
-    this.emailAddress = "nickkantack@gmail.com";
+    this.emailAddress = authenticator.getEmail();
     this.makeLocalNamesMatchRemote();
   }
 
