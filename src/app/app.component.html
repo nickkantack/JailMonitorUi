@@ -1,7 +1,8 @@
 <main class="main">
   <div class="content">
     <div class="controlPanel">
-      <button (click)="makeRemoteMatchLocalNames()">Save</button>
+      <button (click)="makeRemoteMatchLocalNames()" >Save</button>
+      <button (click)="logout()" style="float: right;">Log out</button>
     </div>
     <div [class.flash]="flash" [style.background-color]="statusColor" class="statusDiv">
       {{ message }}

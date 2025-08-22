@@ -41,6 +41,12 @@ export class AppComponent {
     // this.makeLocalNamesMatchRemote();
   }
 
+  logout() {
+    window.localStorage.removeItem(`JailMonitor_creds`);
+    window.localStorage.removeItem(`JailMonitor_emailAddress`);
+    window.location.reload();
+  }
+
   updateMessage(newMessage: string, color: StatusColor) {
     this.flash = false;
 
@@ -99,6 +105,14 @@ export class AppComponent {
     this.csvRepository.getNameListFromRemote(this.emailAddress, 
       (x: string[][]) => {
         this.names = x;
+        // Remove blank names
+        this.names = this.names.filter((x: string[]) => {
+          return x[0] || x[1];  
+        });
+
+        // Sort the names alphabetically by last name
+        this.names.sort((a, b) => a[1].localeCompare(b[1]));
+
         this.updateMessage(`Successfully loaded names from server.`, StatusColor.SUCCESS);
         this.hasLoadedNamesFromServer = true;
       },

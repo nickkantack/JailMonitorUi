@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Jail Monitor instructions</title>
+        <base href="/">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="content instructions">
+            <h1>Jail Monitor</h1>
+            <a href="instructions#setupSection">Setup</a><br/>
+            <a href="instructions#webUiSection">Using the Jail Monitor web interface</a><br/>
+            <a href="instructions#excelSection">Connecting Jail Monitor to an Excel file</a>
+            <p>
+                Jail Monitor is a tool that monitors a list of individuals and sends a daily email report indicating which individuals recent appeared to be in custory in the Pennington County Jail and which individuals recently left custody. A report will look something like this:
+            </p>
+            <img src="assets/images/example_email.png"/>
+            <p>
+                The tool analyzes the <a href="https://apps.pennco.org/pcjpop/public">Pennington County Jail website</a> on a daily basis to determine which individuals are in and out of custody.
+            </p>
+            <h2 id="setupSection">Setup</h2>
+            <p>
+                Follow these steps to begin receiving daily emails.
+            </p>
+            <div class="note">
+                <ol>
+                    <li>
+                        Obtain an account password from the Jail Monitor developer (nickkantack@gmail.com).
+                    </li>
+                    <li>
+                        Create your list of names. There are two options:
+                        <ul>
+                            <li>
+                                Use the Jail Monitor web interface.
+                            </li>
+                            <li>
+                                Connect Jail Monitor to an Excel file on your computer.
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            <p>
+                After these steps are complete, you will start receiving daily emails.
+            </p>
+            <h2 id="webUiSection">
+                Using the Jail Monitor web interface
+            </h2>
+            <p>
+                You can access the web interface at <a href="https://jailmonitor.penncolabs.org">jailmonitor.penncolabs.org</a>. The very first time you visit the site,
+                it will ask you for your password.
+            </p>
+            <img src="assets/images/enter_password.png"/>
+            <div class="note">
+                Note: If you incorrectly enter your password, you'll receive an error message and can retry entering your password. If repeated attempts are not successful, contact the developer to have your password reset (nickkantack@gmail.com).
+            </div>
+            <p>
+                After you successfully enter your password, credentials will be stored on your device and you will not need to enter your password on future visits. you will see the main interface for managing your list of names.
+            </p>
+            <img src="assets/images/main_ui.png"/>
+            <p>
+                Initially, you will see an empty list of names. You can begin adding names by clicking the <span class="buttonSpan">Add name</span> button. This will produce a row in the table that will allow you to enter the first and last name of an individual to monitor.
+            </p>
+            <img src="assets/images/one_draft_name.png"/>
+            <p>
+                After adding an name you'll notice the banner at the top of the screen indicates there are unsaved changes. This means you've altered the list in your browser but the server has not saved the change. To save your changes to the server, click the <span class="buttonSpan">Save</span> button in the upper left corner of the page.
+            </p>
+            <img src="assets/images/changes_saved.png"/>
+            <p>
+                Once your changes are saved, the banner at the top of the page indicates so. If you attempt to close the page with unsaved changes, the browser will inform you that you have unsaved changes and give you a chance to return and save.
+            </p>
+            <p>
+                To remove a name, click the <span>
+              <svg style="height: 1em;" viewBox="0 0 100 100">
+                <path stroke-width="4px" stroke="#333" d="M0 100L100 0"/>
+                <path stroke-width="4px" stroke="#333" d="M0 0L100 100"/>
+              </svg>
+                </span> button to the right of the name.
+            </p>
+            <h2>
+                Some notes on the web interface
+            </h2>
+            <p>
+                <ul>
+                    <li>
+                        You can enter names with any style of capitalization you like, but the names are stored on the server all lower-case. This is why you'll see names in all lower case anytime the list is loaded from the server, even if you originally entered them with capitalization.
+                    </li>
+                    <li>
+                        If someone has a name that contains multiple separate words (e.g. "red shirt") feel free to enter it with the space. The Jail Monitor will recognize this name even if the jail website takes a slightly different approach (e.g. "red-shirt" or "redshirt").
+                    </li>
+                    <li>
+                        You can enter names in any order. The next time your list of names is loaded from the server, it will display in the UI sorted alphabetically by the first letter in the last name.
+                    </li>
+                    <li>
+                        Once you log in on a device, that device will remain logged in. This means that if someone else uses the same computer to access the Jail Monitor web interface, they will be able to view and manage your list of names. If you need to revoke a device's access to your list of names, or if you want to allow someone else to manage their list of names on the same device, you can use the <span class="buttonSpan">Log out</span> button at the top-right of the web interface.
+                </li>
+                </ul>
+            </p>
+            <h2 id="excelSection">
+                Connecting Jail Monitor to an Excel file
+            </h2>
+            <p>
+                It is possible to configure a program on your computer that will regularly upload an Excel file to the Jail Monitor server instead of using the web interface. This is a good option for users who already maintain a spreadsheet with names. To configure this connection, contact the developer (nickkantack@gmail.com).
+            </p>
+            <h2>
+                General help or reporting bugs
+            </h2>
+            <p>
+                If you are experiencing issues with Jail Monitor, you can contact the developer for assistance (nickkantack@gmail.com). You can also suggest changes to the tool.
+            </p>
+        </div>
+    </body>
+</html>

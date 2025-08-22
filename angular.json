@@ -20,6 +20,7 @@
             "outputPath": "dist/jail-monitor-ui",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "outputHashing": "none",
             "polyfills": [
               "zone.js"
             ],
@@ -54,8 +55,7 @@
                   "maximumWarning": "4kB",
                   "maximumError": "8kB"
                 }
-              ],
-              "outputHashing": "all"
+              ]
             },
             "development": {
               "optimization": false,

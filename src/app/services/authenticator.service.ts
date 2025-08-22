@@ -87,6 +87,8 @@ export class Authenticator {
                     this.emailAddress = credsAndEmail.email;
                     window.localStorage.setItem(`JailMonitor_creds`, this.creds);
                     window.localStorage.setItem(`JailMonitor_emailAddress`, this.emailAddress);
+                    // Ad hoc fix for one time startup authentication failures
+                    window.location.reload();
                 }
             } catch {
                 alert(`Authentication failed.`);
